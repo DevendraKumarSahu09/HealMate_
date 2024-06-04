@@ -8,7 +8,6 @@ import authRoute from './Routes/authRoute.js';
 import userRoute from './Routes/userRoute.js';
 import doctorRoute from './Routes/doctorRoute.js';
 import reviewRoute from './Routes/reviewRoute.js';
-
 import bookingRoute from './Routes/bookingRoute.js';
 
 dotenv.config()
@@ -17,7 +16,10 @@ const app = express()
 const port = process.env.PORT || 8000
 
 const corsOptions = {
-    origin: true
+    origin: 'http://localhost:5173', // Specify your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
 };
 
 app.get('/', (req, res) => {
@@ -35,11 +37,10 @@ const connectDB = async () => {
     }
 }
 
-
 // Middleware
+app.use(cors(corsOptions)); // Ensure CORS is applied before other middlewares and routes
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
 
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users', userRoute);
