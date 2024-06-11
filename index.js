@@ -49,7 +49,7 @@ const connectDB = async () => {
 }
 
 // Middleware
-app.use(cors(corsOptions)); // Ensure CORS is applied before other middlewares and routes
+// app.use(cors(corsOptions)); // Ensure CORS is applied before other middlewares and routes
 app.use(express.json());
 app.use(cookieParser());
 
