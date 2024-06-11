@@ -15,12 +15,23 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 8000
 
-const corsOptions = {
-    origin: 'http://localhost:5173', // Specify your frontend URL
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204
-};
+const allowedOrigins = ['http://localhost:5173', 'https://heal-mate.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+// const corsOptions = {
+//     origin: 'http://localhost:5173', // Specify your frontend URL
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+//     optionsSuccessStatus: 204
+// };
 
 app.get('/', (req, res) => {
     res.send("API is working")
